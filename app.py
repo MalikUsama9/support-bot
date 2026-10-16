@@ -1,5 +1,12 @@
 """Streamlit demo UI.  Run:  streamlit run app.py"""
+import os
 import streamlit as st
+
+# chroma_db is not stored in GitHub, so build the knowledge base on first start
+if not os.path.exists("chroma_db"):
+    from src.ingest import main as build_knowledge_base
+    build_knowledge_base()
+
 from src.answer import answer, STORE_NAME
 
 st.set_page_config(page_title=f"{STORE_NAME} Support", page_icon="💬")
