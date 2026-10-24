@@ -6,7 +6,7 @@ from google import genai
 from google.genai import types
 from src.retrieve import retrieve
 
-load_dotenv()
+load_dotenv(override=True)
 
 STORE_NAME = "UrbanThread"
 MODEL = os.getenv("LLM_MODEL", "gemini-2.5-flash")
@@ -113,7 +113,9 @@ def answer(question, log=True):
             try:
                 reply = call_llm(SYSTEM_RULES, user_msg)
             except Exception as e:  # fail safely
-                result = _handoff(f"llm_error: {type(e).__name__}")
+                # CHANGED: show the real error in the terminal and save it in the log
+                print("LLM ERROR:", repr(e))
+                result = _handoff(f"llm_error: {type(e).__name__}: {str(e)[:300]}")
             else:
                 if "NOT_SURE" in reply:
                     result = _handoff("model_not_sure", [c["source"] for c in good])

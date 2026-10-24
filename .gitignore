@@ -1,12 +1,17 @@
+# Secrets
 .env
-chroma_db/
-logs/
-__pycache__/
-venv/
-eval/results.csv
+src/.env
+.streamlit/secrets.toml
 
-.env
+# Virtual environments
 .venv/
-chroma_db/
-logs/
+venv/
+testenv/
+
+# Python cache
 __pycache__/
+*.pyc
+
+# Logs and eval output
+logs/
+eval/results.csv
